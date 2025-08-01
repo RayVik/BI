@@ -2,27 +2,18 @@ import os
 from dotenv   import load_dotenv
 load_dotenv("/app/.env")
 
-# IP       = os.getenv('IP_DATA', '83.239.206.206')
-# PORT     = int(os.getenv('PORT_DATA', 8011))          # HTTP-порт (8123 в контейнере)
-# DB       = os.getenv('DB_DATA', 'ASH')
-# USERNAME = os.getenv('USERNAME_DATA', 'user6525')
-# PASSWD   = os.getenv('PASSWD_DATA', '34SwkLaaEi7aHfj0')
-IP       = '83.239.206.206'
-PORT     = 8011          # HTTP-порт (8123 в контейнере)
-DB       = 'ASH'
-USERNAME = 'user6525'
-PASSWD   = '34SwkLaaEi7aHfj0'
+IP       = os.getenv('IP_DATA', '83.239.206.206')
+PORT     = int(os.getenv('PORT_DATA', 8011))          # HTTP-порт (8123 в контейнере)
+DB       = os.getenv('DB_DATA', 'ASH')
+USERNAME = os.getenv('USERNAME_DATA', 'user6525')
+PASSWD   = os.getenv('PASSWD_DATA', '34SwkLaaEi7aHfj0')
 
-# HOST_BI     =  os.getenv('DB_HOST', 'db')
-# DB_BI       =  os.getenv('DB_NAME', 'BI')
-# USERNAME_BI =  os.getenv('DB_USER', 'bitask_user')
-# PASSWD_BI   =  os.getenv('DB_PASS', 'bitask_pass')
-# tablename   =  os.getenv('BI_tablename', 'bi__task_register')
-HOST_BI     =  'db'
-DB_BI       =  'BI'
-USERNAME_BI =  'bitask_user'
-PASSWD_BI   =  'bitask_pass'
-tablename   =  'bi__task_register'
+HOST_BI     =  os.getenv('DB_HOST', 'db')
+DB_BI       =  os.getenv('DB_NAME', 'BI')
+USERNAME_BI =  os.getenv('DB_USER', 'bitask_user')
+PASSWD_BI   =  os.getenv('DB_PASS', 'bitask_pass')
+tablename   =  os.getenv('BI_tablename', 'bi__task_register')
+
 
 RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq')
 RABBITMQ_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'admin')
