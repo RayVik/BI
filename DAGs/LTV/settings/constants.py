@@ -24,28 +24,18 @@ USERNAME_BI =  'bitask_user'
 PASSWD_BI   =  'bitask_pass'
 tablename   =  'bi__task_register'
 
-# RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq')
-# RABBITMQ_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'admin')
-# RABBITMQ_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'mq_pass')
-# queue_name    = os.getenv('queue_name_LTV', 'DAGs/LTV')
-RABBITMQ_HOST = 'rabbitmq'
-RABBITMQ_USER = 'admin'
-RABBITMQ_PASS = 'mq_pass'
-queue_name    = 'DAGs/LTV'
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq')
+RABBITMQ_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'admin')
+RABBITMQ_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'mq_pass')
+queue_name    = os.getenv('queue_name_LTV', 'DAGs/LTV')
 
-# SCHEDULE_INTERVAL  = int(os.getenv('SCHEDULE_INTERVAL', 20)) #время между проверками очереди в секундах
-# MAX_PARALLEL_TASKS = int(os.getenv('MAX_PARALLEL_TASKS', 1)) #кол-во параллельных запусков
-SCHEDULE_INTERVAL  = 20 #время между проверками очереди в секундах
-MAX_PARALLEL_TASKS = 1 #кол-во параллельных запусков
+SCHEDULE_INTERVAL  = int(os.getenv('SCHEDULE_INTERVAL', 20)) #время между проверками очереди в секундах
+MAX_PARALLEL_TASKS = int(os.getenv('MAX_PARALLEL_TASKS', 1)) #кол-во параллельных запусков
 
-# REVISION        = os.getenv('REVISION', 'v20250522')
-# _correct_coef   = float(os.getenv('_correct_coef', 0.2))
-# table_predict   = os.getenv('table_predict', 'BIG_DATA_LTV_ONLINE_OFFLINE_PREDICT')
-# save_result     = os.getenv('save_result', ['db', 'parquet', 'excel'])  # сохранение результата в бд 'db', в файл 'parquet', 'csv', 'excel'
-REVISION        = 'v20250522'
-_correct_coef   = 0.2
-table_predict   = 'BIG_DATA_LTV_ONLINE_OFFLINE_PREDICT'
-save_result     = ['db', 'parquet', 'excel']
+REVISION        = os.getenv('REVISION', 'v20250522')
+_correct_coef   = float(os.getenv('_correct_coef', 0.2))
+table_predict   = os.getenv('table_predict', 'BIG_DATA_LTV_ONLINE_OFFLINE_PREDICT')
+save_result     = os.getenv('save_result', ['db', 'parquet', 'excel'])  # сохранение результата в бд 'db', в файл 'parquet', 'csv', 'excel'
 
 passport_of_models = [
     # модель которая обучена на 3 тензора по данным 1-3 заказа
