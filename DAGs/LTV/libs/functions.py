@@ -61,19 +61,11 @@ def transform_total_df(
     group_files = ['CUSTOMER_ID','SEQUENCE_NUMBER','CUSTOMER_LIFETIMEDAY','CASSTICKID_LAST','generation']
     
     df_ltv          = total_df[total_df['PREDICT_FEATURE'] == 'LTV']
-    df_ltv_online   = total_df[total_df['PREDICT_FEATURE'] == 'LTV_ONLINE_OFFLINE_FRACTION']
     
     max_tensor_size = df_ltv['generation'].max()
     print(f"max_tensor_size {max_tensor_size}")
-    
-    df_ltv        = df_ltv.set_index(group_files)
+
     df_ltv        = df_ltv.rename(columns={'PREDICT_VALUE':'ltv','PREDICT_REVISION':'PREDICT_REVISION_LTV', 'PREDICT_FEATURE':'PREDICT_FEATURE_LTV'})
-    
-    df_ltv_online = df_ltv_online.set_index(group_files)
-    df_ltv_online = df_ltv_online.rename(columns={'PREDICT_VALUE':'ltv_online_frt','PREDICT_REVISION':'PREDICT_REVISION_LTV_ONLINE', 'PREDICT_FEATURE':'PREDICT_FEATURE_LTV_ONLINE'})
-    
-    db_result      = pd.concat([df_ltv, df_ltv_online],axis=1).reset_index()
-    db_result      = db_result.set_index('CUSTOMER_ID')
     
     # считаем последовательные заказы
     df_ltv_current       = df_base.copy()
@@ -82,26 +74,21 @@ def transform_total_df(
     
     # отбираем заказ размера тензора по котрому строится предсказание
     df_ltv_current       = df_ltv_current[df_ltv_current['SN'] <= max_tensor_size].groupby(['CUSTOMER_ID'])['PRICEsum'].sum().reset_index()
-    df_ltv_current       = df_ltv_current.set_index('CUSTOMER_ID')
     
     df_ltv_current       = df_ltv_current.rename(columns={'PRICEsum':'cumsum_fact'})
     
-    db_result            = pd.concat([db_result, df_ltv_current],axis=1).reset_index()
+    db_result            = pd.merge(df_ltv, df_ltv_current, on =['CUSTOMER_ID'], how='left')
     
-    db_result[['ltv','ltv_online_frt','cumsum_fact']] = db_result[['ltv','ltv_online_frt','cumsum_fact']].astype(float)
+    db_result[['ltv','cumsum_fact']] = db_result[['ltv','cumsum_fact']].astype(float)
     
     db_result['ltv']          = db_result.apply(lambda x:   x['cumsum_fact'] +  x['cumsum_fact'] * _correct_coef if x['ltv'] < x['cumsum_fact'] else x['ltv'], axis = 1)
-    db_result['ltv_online']   = db_result['ltv'] * db_result['ltv_online_frt']
 
-    df_ltv_correct = db_result[group_files + ['PREDICT_REVISION_LTV', 'PREDICT_FEATURE_LTV','ltv']].copy()
+    df_ltv_correct = db_result[group_files + ['PREDICT_REVISION_LTV', 'PREDICT_FEATURE_LTV', 'ltv']].copy()
     df_ltv_correct = df_ltv_correct.rename(columns={'PREDICT_REVISION_LTV':'PREDICT_REVISION', 'PREDICT_FEATURE_LTV':'PREDICT_FEATURE', 'ltv':'PREDICT_VALUE'})
-    df_ltv_correct['PREDICT_FEATURE'] = df_ltv_correct['PREDICT_FEATURE'].apply(lambda x: x + str('_PROD')) 
-    
-    df_ltv_online_correct                    = db_result[ group_files + ['PREDICT_REVISION_LTV_ONLINE', 'PREDICT_FEATURE_LTV_ONLINE','ltv_online']].copy()
-    df_ltv_online_correct                    = df_ltv_online_correct.rename(columns={'PREDICT_REVISION_LTV_ONLINE':'PREDICT_REVISION', 'PREDICT_FEATURE_LTV_ONLINE':'PREDICT_FEATURE', 'ltv_online':'PREDICT_VALUE'})
-    df_ltv_online_correct['PREDICT_FEATURE'] = df_ltv_online_correct['PREDICT_FEATURE'].apply(lambda x: x.replace('_FRACTION','') + str('_PROD')) 
 
-    total_df         = pd.concat([total_df, df_ltv_correct, df_ltv_online_correct], axis=0)
+    df_ltv_correct['PREDICT_FEATURE'] = df_ltv_correct['PREDICT_FEATURE'].apply(lambda x: x + str('_PROD'))
+
+    total_df         = pd.concat([total_df, df_ltv_correct], axis=0)
     total_df.columns = total_df.columns.str.upper()
     
     return total_df
