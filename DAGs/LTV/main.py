@@ -71,27 +71,7 @@ def process_task(task_data, filename):
         query_base = queries.scoring_segment(reserach_period, currdate)
         df_base    = connection_db.QueryExecuted(query_base)
         logger.info(f"Загружено {len(df_base)} записей")
-
-
-        # ПРОВЕРКА ДАННЫХ
-        os.makedirs('/app/result', exist_ok=True)
-        # parquet_path = f'/app/result/data_check.parquet'
-        #
-        # tmp = connection_db.QueryExecuted('''SELECT CUSTOMER_ID, USER_TYPE, CASSTICKID, IDENTIFICATION,
-        #                                            FIRSTORDERDATE, TRADE_DT, PRODUCT_CODE, MART_NAME_RU,
-        #                                            SEGMENT_NAME_RU, CATEGORY_NAME_RU, FAMILY_NAME_RU,
-        #                                            REGION_NAME_EN, AMOUNT, PRICE
-        #                                      FROM BIG_DATA_LTV_ONLINE_OFFLINE_NEW2025
-        #                                      WHERE  toYYYYMM(FIRSTORDERDATE) <= toYYYYMM(toDate('2025-04-01'))
-        #                                         AND toYYYYMM(FIRSTORDERDATE) >= toYYYYMM(toDate('2025-02-01'))''')
-        # tmp.to_parquet(parquet_path, index=False)
-
-
-
-        
-        parquet_path = f'/app/result/data_feat.parquet'
-        df_base.to_parquet(parquet_path, index=False)
-
+      
         # Обработка моделей
         logger.info("Запуск обработки моделей...")
         for model_data in passport_of_models:
