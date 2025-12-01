@@ -38,14 +38,7 @@ scheme_forms = {'LTV': {
                                             'required' : True
                                          }
 
-                        },
-                'New': {
-                            'Text': {
-                                            'type'     : 'str',
-                                            'required' : True
-                                         }
-
-                        },
+                        }
                 # 'ChurnRate': {}
 
                 }
