@@ -52,7 +52,7 @@ services:
 
   # Budibase
   app-service:
-    image: budibase/apps
+    image: budibase/apps:3.13.15
     container_name: bbapps
     restart: unless-stopped
     networks: [bi_network]
@@ -85,7 +85,7 @@ services:
         condition: service_started
 
   worker-service:
-    image: budibase/worker
+    image: budibase/worker:3.13.15
     container_name: bbworker
     restart: unless-stopped
     networks: [bi_network]
@@ -135,7 +135,7 @@ services:
       retries: 3
 
   proxy-service:
-    image: budibase/proxy
+    image: budibase/proxy:3.13.15
     container_name: bbproxy
     restart: unless-stopped
     networks: [bi_network]
