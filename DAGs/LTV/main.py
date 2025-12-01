@@ -71,7 +71,7 @@ def process_task(task_data, filename):
         query_base = queries.scoring_segment(reserach_period, currdate)
         df_base    = connection_db.QueryExecuted(query_base)
         logger.info(f"Загружено {len(df_base)} записей")
-
+      
         # Обработка моделей
         logger.info("Запуск обработки моделей...")
         for model_data in passport_of_models:
