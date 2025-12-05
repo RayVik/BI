@@ -1,18 +1,22 @@
 import os
+from dotenv   import load_dotenv
+load_dotenv("/app/.env")
 
-HOST     =  os.getenv('DB_HOST', 'db')
-DB       =  os.getenv('DB_NAME', 'BI')
-USERNAME =  os.getenv('DB_USER', 'bitask_user')
-PASSWD   =  os.getenv('DB_PASS', 'bitask_pass')
-tablename =  os.getenv('BI_tablename', 'bi__task_register')
-PORT      =  int(os.getenv('DB_PORT', 5432))
+HOST     =  os.getenv('DB_HOST', None)
+DB       =  os.getenv('DB_NAME', None)
+USERNAME =  os.getenv('DB_USER', None)
+PASSWD   =  os.getenv('DB_PASS', None)
+tablename = os.getenv('BI_tablename', None)
+PORT      = int(os.getenv('DB_PORT', 5432))
 
-RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq')
-RABBITMQ_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'admin')
-RABBITMQ_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'mq_pass')
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', None)
+RABBITMQ_USER = os.getenv('RABBITMQ_DEFAULT_USER', None)
+RABBITMQ_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', None)
 
-retry_delay   = int(os.getenv('retry_delay', 5))  # время ожидания подключения к RabbitMQ
-max_retries   = int(os.getenv('max_retries', 15)) # максимальное кол-во попыток подключения к RabbitMQ
+# время ожидания подключения к RabbitMQ
+retry_delay   = int(os.getenv('retry_delay', 5))
+# максимальное кол-во попыток подключения к RabbitMQ
+max_retries   = int(os.getenv('max_retries', 15))
 
 external_IP   = os.getenv('external_IP', None)
 external_port = int(os.getenv('external_port', 8000))

@@ -2,10 +2,9 @@ import datetime
 import pandas as pd
 
 
-def scoring_segment(reserach_period=90, currdate=pd.to_datetime(datetime.datetime.now()).date().strftime('%Y-%m-%d'),
+def scoring_segment(table_name, reserach_period=90, currdate=pd.to_datetime(datetime.datetime.now()).date().strftime('%Y-%m-%d'),
                     seed=42):
-    # table_name = 'BIG_DATA_LTV_ONLINE_OFFLINE_NEW'
-    table_name = 'BIG_DATA_LTV_ONLINE_OFFLINE_NEW2025'
+
     currdate = pd.to_datetime(currdate).date()
     currdate = currdate - datetime.timedelta(days=1)
     query_base = f'''

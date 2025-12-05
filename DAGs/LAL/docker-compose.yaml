@@ -1,10 +1,6 @@
 services:
   lal:
     build: .
-    environment:
-      - RESEARCH_PERIOD=90
-      - CURRDATE=2025-06-15
-      - SERVICE_NAME=LAL  # Для имени очереди
     volumes:
       - ./result:/app/result
     networks:

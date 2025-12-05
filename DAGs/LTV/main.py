@@ -5,13 +5,13 @@ import json
 import logging
 import warnings
 import psycopg2
-import pandas   as pd
+import pandas as pd
 from datetime           import datetime
 from libs               import queries, run_models, functions, connection_db
 from settings.constants import (passport_of_models, REVISION, save_result, \
                                 HOST_BI, DB_BI, USERNAME_BI, PASSWD_BI, tablename,\
                                 RABBITMQ_USER, RABBITMQ_PASS, RABBITMQ_HOST, queue_name, \
-                                SCHEDULE_INTERVAL, MAX_PARALLEL_TASKS )
+                                SCHEDULE_INTERVAL, MAX_PARALLEL_TASKS, table_load_data )
 from libs.label_encoder              import MultiFeatureLabelEncoder
 from apscheduler.schedulers.blocking import BlockingScheduler
 
@@ -68,7 +68,7 @@ def process_task(task_data, filename):
 
         # Загрузка данных из БД
         logger.info("Загрузка данных из БД...")
-        query_base = queries.scoring_segment(reserach_period, currdate)
+        query_base = queries.scoring_segment(table_load_data, reserach_period, currdate)
         df_base    = connection_db.QueryExecuted(query_base)
         logger.info(f"Загружено {len(df_base)} записей")
       
