@@ -67,10 +67,11 @@ def process_task(task_data, filename):
         currdate = task_data.get('CURRDATE')
 
         # Загрузка данных из БД
-        logger.info("Загрузка данных из БД...")
+        logger.info(f"Загрузка данных из БД: таблица {table_load_data}")
         query_base = queries.scoring_segment(table_load_data, reserach_period, currdate)
         df_base    = connection_db.QueryExecuted(query_base)
         logger.info(f"Загружено {len(df_base)} записей")
+        logger.info(f"Загружены такие колонки {df_base.columns.tolist()}")
       
         # Обработка моделей
         logger.info("Запуск обработки моделей...")
